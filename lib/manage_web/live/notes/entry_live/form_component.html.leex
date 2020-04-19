@@ -11,7 +11,7 @@
   <%= error_tag f, :name %>
 
   <%= label f, :note %>
-  <%= text_input f, :note %>
+  <%= textarea f, :note %>
   <%= error_tag f, :note %>
 
   <%= label f, :date %>
@@ -19,7 +19,7 @@
   <%= error_tag f, :date %>
 
   <%= label f, :tags %>
-  <%= multiple_select f, :tags, ["Option 1": "option1", "Option 2": "option2"] %>
+  <%= text_input f, :tags  %>
   <%= error_tag f, :tags %>
 
   <%= submit "Save", phx_disable_with: "Saving..." %>

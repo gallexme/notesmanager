@@ -16,6 +16,7 @@ defmodule ManageWeb.Notes.EntryLive.Show do
      |> assign(:entry, Notes.get_entry!(id))}
   end
 
+  defp from_markdown(string), do: Earmark.as_html!(string)
   defp page_title(:show), do: "Show Entry"
   defp page_title(:edit), do: "Edit Entry"
 end

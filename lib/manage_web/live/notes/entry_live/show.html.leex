@@ -18,7 +18,7 @@
 
   <li>
     <strong>Note:</strong>
-    <%= @entry.note %>
+    <%= raw from_markdown(@entry.note) %>
   </li>
 
   <li>
@@ -28,7 +28,7 @@
 
   <li>
     <strong>Tags:</strong>
-    <%= @entry.tags %>
+    <%= Enum.join(@entry.tags," ") %>
   </li>
 
 </ul>
