@@ -31,9 +31,12 @@ case "$1" in
         if [ -d "$PGDATA" ]
         then
             start_postgres
+	    mix ecto.migrate
         else
             pg_ctl initdb -o '--auth=trust' && start_postgres && createdb $PGDATABASE && init_user_and_db
             mix ecto.create
+
+	    mix ecto.migrate
         fi
         ;;
     remove)

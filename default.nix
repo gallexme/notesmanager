@@ -11,10 +11,12 @@ with pkgs;
 mkShell {
   # Sets the build inputs, i.e. what will be available in our
   # local environment.
-  buildInputs = [elixir git nodejs-13_x postgresql];
+  buildInputs = [elixir git nodejs-13_x postgresql glibcLocales];
   shellHooks = ''
-  
+    export glibcLocales=$(nix-build --no-out-link "<nixpkgs>" -A glibcLocales)
+    export LOCALE_ARCHIVE_2_27="${glibcLocales}/lib/locale/locale-archive"
     export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
     export PGDATABASE=domain_dev 
     export PGDATA="$PWD/nix/postgres/pgdata" 
     export PGSOCKETS="$PWD/nix/postgres/sockets" 
