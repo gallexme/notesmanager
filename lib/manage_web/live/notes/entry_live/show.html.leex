@@ -1,0 +1,37 @@
+<h1>Show Entry</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, ManageWeb.Notes.EntryLive.FormComponent,
+    id: @entry.id,
+    title: @page_title,
+    action: @live_action,
+    entry: @entry,
+    return_to: Routes.notes_entry_show_path(@socket, :show, @entry) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @entry.name %>
+  </li>
+
+  <li>
+    <strong>Note:</strong>
+    <%= @entry.note %>
+  </li>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @entry.date %>
+  </li>
+
+  <li>
+    <strong>Tags:</strong>
+    <%= @entry.tags %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.notes_entry_show_path(@socket, :edit, @entry), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.notes_entry_index_path(@socket, :index) %></span>

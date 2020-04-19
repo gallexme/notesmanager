@@ -1,0 +1,41 @@
+<h1>Listing Entries</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, ManageWeb.Notes.EntryLive.FormComponent,
+    id: @entry.id || :new,
+    title: @page_title,
+    action: @live_action,
+    entry: @entry,
+    return_to: Routes.notes_entry_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Note</th>
+      <th>Date</th>
+      <th>Tags</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="entries">
+    <%= for entry <- @entries do %>
+      <tr id="entry-<%= entry.id %>">
+        <td><%= entry.name %></td>
+        <td><%= entry.note %></td>
+        <td><%= entry.date %></td>
+        <td><%= entry.tags %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.notes_entry_show_path(@socket, :show, entry) %></span>
+          <span><%= live_patch "Edit", to: Routes.notes_entry_index_path(@socket, :edit, entry) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: entry.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Entry", to: Routes.notes_entry_index_path(@socket, :new) %></span>

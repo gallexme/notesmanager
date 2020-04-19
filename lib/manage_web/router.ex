@@ -10,6 +10,17 @@ defmodule ManageWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  scope "/notes", ManageWeb.Notes, as: :notes do
+    pipe_through :browser
+
+    live "/entries", EntryLive.Index, :index
+    live "/entries/new", EntryLive.Index, :new
+    live "/entries/:id/edit", EntryLive.Index, :edit
+
+    live "/entries/:id", EntryLive.Show, :show
+    live "/entries/:id/show/edit", EntryLive.Show, :edit
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end

@@ -82,6 +82,7 @@ defmodule ManageWeb do
 
       # Import convenience functions for LiveView rendering
       import Phoenix.LiveView.Helpers
+      import ManageWeb.LiveHelpers
 
       import ManageWeb.ErrorHelpers
       import ManageWeb.Gettext
