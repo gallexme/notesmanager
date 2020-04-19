@@ -1,0 +1,50 @@
+#! /usr/bin/env bash
+set -eu
+
+client_pid=$PPID
+
+start_postgres() {
+    if postgres_is_stopped
+    then
+        logfile="nix/postgres/log/pg.log"
+        mkdir -p "$PGSOCKETS" "${logfile%/*}"
+        (set -m
+        pg_ctl start -w --log "$logfile" -o "-p $PGPORT -k $PGSOCKETS -h '*'")
+    fi
+}
+
+postgres_is_stopped() {
+    pg_ctl status >/dev/null
+    (( $? == 3 ))
+}
+init_user_and_db() {
+ psql -v ON_ERROR_STOP=1  <<-EOSQL
+      CREATE USER postgres WITH PASSWORD 'postgres';
+      ALTER USER postgres WITH SUPERUSER;
+      GRANT ALL PRIVILEGES ON DATABASE domain_dev TO postgres;
+EOSQL
+}
+case "$1" in
+    add)
+        mkdir -p nix/postgres/pids 
+        touch nix/postgres/pids/$client_pid
+        if [ -d "$PGDATA" ]
+        then
+            start_postgres
+        else
+            pg_ctl initdb -o '--auth=trust' && start_postgres && createdb $PGDATABASE && init_user_and_db
+            mix ecto.create
+        fi
+        ;;
+    remove)
+        rm nix/postgres/pids/$client_pid
+        if [ -n "$(find nix/postgres/pids -prune -empty)" ]
+        then
+            pg_ctl stop -W
+        fi
+        ;;
+    *)
+        echo "Usage: ${BASH_SOURCE[0]##*/} {add | remove}"
+        exit 1
+        ;;
+esac
