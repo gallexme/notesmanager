@@ -5,7 +5,7 @@ defmodule Manage.Notes.Entry do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "entries" do
-    field :date, :naive_datetime
+    field :date, :naive_datetime, default: DateTime.now!("Etc/UTC")
     field :name, :string
     field :note, :string
     field :tags, {:array, :string}
@@ -14,8 +14,6 @@ defmodule Manage.Notes.Entry do
   end
 
   def changeset(entry, %{"tags" => tags} = attrs) when is_binary(tags) do
-    IO.inspect("SPLIT")
-
     tags =
       if is_list(tags) do
         tags
@@ -28,9 +26,6 @@ defmodule Manage.Notes.Entry do
 
   @doc false
   def changeset(entry, attrs) do
-    IO.inspect(entry)
-    IO.inspect(attrs)
-
     entry
     |> cast(attrs, [:name, :note, :date, :tags])
     |> validate_required([:name, :note, :date, :tags])

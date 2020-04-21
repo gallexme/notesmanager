@@ -42,7 +42,8 @@ module.exports = (env, options) => {
               options: {
                 sourceMap: devMode
               }
-            }
+            },
+            "postcss-loader"
           ]
         }
       ]

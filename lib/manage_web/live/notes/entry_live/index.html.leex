@@ -9,13 +9,12 @@
     return_to: Routes.notes_entry_index_path(@socket, :index) %>
 <% end %>
 
-<table>
+<table class="table-auto">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Note</th>
-      <th>Date</th>
-      <th>Tags</th>
+      <th class="px-4 py-2">Name</th>
+      <th class="px-4 py-2">Date</th>
+      <th class="px-4 py-2">Tags</th>
 
       <th></th>
     </tr>
@@ -23,15 +22,14 @@
   <tbody id="entries">
     <%= for entry <- @entries do %>
       <tr id="entry-<%= entry.id %>">
-        <td><%= entry.name %></td>
-        <td><%= entry.note %></td>
-        <td><%= entry.date %></td>
-        <td><%= entry.tags %></td>
+        <td  class="border px-4 py-2"><%= entry.name %></td>
+        <td class="border px-4 py-2"><%= entry.date %></td>
+        <td class="border px-4 py-2"><%= entry.tags %></td>
 
-        <td>
-          <span><%= live_redirect "Show", to: Routes.notes_entry_show_path(@socket, :show, entry) %></span>
-          <span><%= live_patch "Edit", to: Routes.notes_entry_index_path(@socket, :edit, entry) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: entry.id, data: [confirm: "Are you sure?"] %></span>
+        <td class="bg-gray-100">
+          <span class="border px-4 py-2"><%= live_redirect "Show", to: Routes.notes_entry_show_path(@socket, :show, entry) %></span>
+          <span class="border px-4 py-2"><%= live_patch "Edit", to: Routes.notes_entry_index_path(@socket, :edit, entry) %></span>
+          <span class="border px-4 py-2"><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: entry.id, data: [confirm: "Are you sure?"] %></span>
         </td>
       </tr>
     <% end %>
