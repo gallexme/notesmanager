@@ -1,7 +1,7 @@
 
-<nav class="flex items-center justify-between flex-wrap bg-grey-lighter p-3 font-sans">
+<nav class=" shadow flex items-center justify-between flex-wrap bg-gray-200 rounded-y-lg p-3  font-sans">
     <div class="flex items-center flex-no-shrink text-grey-darkest mr-6">
-        <span class="font-semibold text-xl tracking-tight">Note Manager</span>
+        <span class="font-semibold text-xl tracking-tight">Notes Manager</span>
     </div>
     <div class="block lg:hidden">
         <button class="flex items-center px-3 py-2 border rounded text-grey-darkest border-grey-darkest" onclick="navbarAccordian()">
